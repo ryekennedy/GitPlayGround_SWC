@@ -48,6 +48,8 @@
     <Compile Include="StateTaxColumn.cs" />
     <Compile Include="StateTaxRepository.cs" />
     <Compile Include="TestMode\MockOrderRepository.cs" />
+    <Compile Include="TestMode\MockProductRepository.cs" />
+    <Compile Include="TestMode\MockStateTaxRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlooringProgram.Models\FlooringProgram.Models.csproj">

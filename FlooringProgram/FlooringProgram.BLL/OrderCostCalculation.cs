@@ -9,6 +9,16 @@ namespace FlooringProgram.BLL
 {
     public static class OrderCostCalculation
     {
+        public static void Execute(Order order)
+        {
+            CalculateMaterialCost(order);
+            CalculateLaborCost(order);
+            CalculateTaxCost(order);
+            CalculateOrderTotal(order);
+
+
+
+        }
         
         public static void CalculateMaterialCost(Order order)
         {

@@ -1,0 +1,77 @@
+Notes on interfaces
+
+make interface with generic method statements (no code implementation) followed by semicolon after each interface
+
+class ILogger
+{
+	void WriteToLog(string message);
+}
+
+make separate classes that will implement the interface    
+public class ConsoleLogger : ILogger
+{
+	void WriteToLog(string message)
+	{
+		Console.WriteLine("Log {0}", message);
+	}
+}
+
+
+--------- different class
+
+public class FileLogger : ILogger
+{
+	void WriteToLog(string message)
+	{
+		var filewriter = File.AppendText("Log.txt");
+		filewriter.WriteLine(message);
+		filewriter.Close();
+		
+	}
+}
+
+
+
+implement the methods with code specific to that implementation
+
+make a factory class to create the different SeparateClass depending on the config file or what ever is passed to the factory to allow the different interfaces
+
+static class ILoggerFactory
+{
+	private static ILogger _myLogger;
+	public ILogger GetLogger()
+	{
+		if(_myLogger == null)
+		{
+		  string logtype = ConfigurationManager.AppSettings["logtype];	//need System.Configuration  reference and namespace
+		  
+		  if(logtype == "C")
+			{
+				_myLogger = new ConsoleLogger();
+		  
+			}
+			else if(logtype == "F")
+			{
+			_myLogger = new FileLogger();
+			{
+		}
+		
+		return _myLogger;
+	}
+
+}
+------------------------
+
+in Main
+
+ILogger log = ILoggerFactory.GetLogger();
+
+log.WriteToLog("Hello world");
+
+
+---------------------
+
+in App.config
+
+create appSetting
+<add key = "logtype" = "C" />   // can change to "F" for file, "C" for Console

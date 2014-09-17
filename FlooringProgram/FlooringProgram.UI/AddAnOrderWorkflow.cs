@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FlooringProgram.Data;
 using FlooringProgram.Models;
 using FlooringProgram.BLL;
+using FlooringProgram.Models.Responses;
 
 namespace FlooringProgram.UI
 {
@@ -16,6 +12,7 @@ namespace FlooringProgram.UI
             //load product repository
             var orderManager = OrderManagerFactory.CreateInstance();
             var taxManager = TaxManagerFactory.CreateInstance();
+            var productManager = ProductManagerFactory.CreateInstance();
 
             Console.Clear();
             Console.WriteLine("---------Add an Order--------");
@@ -25,56 +22,53 @@ namespace FlooringProgram.UI
 
             Console.WriteLine("Enter Customer Name: " );
             newOrder.CustomerName = Console.ReadLine();
-            
 
-
-            bool validState = false;
-            while (!validState)
+            do
             {
-
                 Console.WriteLine("Enter State Abbreviation: ");
+
                 newOrder.StateTax.StateAbbreviation = Console.ReadLine();
 
-                var taxInfo = taxManager.ValidateState(newOrder);
+                taxManager.AddState(newOrder);
 
-                if(taxInfo == null)
-                    Console.WriteLine("That is not a valid state");
-                else
-                {
-                    validState = true;
-                }
-            }
+                Console.WriteLine(taxManager.AddState(newOrder).Status);
 
+            } while (!taxManager.AddState(newOrder).Success);
 
+            taxManager.AssignStateValues(newOrder);
 
+            
             Console.WriteLine("List of Product Options:");
-            foreach (var product in products)
+
+            var productList = productManager.LoadProductList();
+            foreach (var product in productList)
             {
                 Console.WriteLine(product.ProductType);
             }
 
-            
-            Console.WriteLine("Enter Product Type: ");
-            newOrder.Product.ProductType = Console.ReadLine();
-
-            foreach(var product in products.Where(p => p.ProductType == newOrder.Product.ProductType))
+            do
             {
-                newOrder.Product.CostPersquareFoot = product.CostPersquareFoot;
-                newOrder.Product.LaborCostPerSquareFoot = product.LaborCostPerSquareFoot;
-            }
-            
-                
+                Console.WriteLine("Enter Product Type: ");
+
+                newOrder.Product.ProductType = Console.ReadLine();
+
+                productManager.AddProduct(newOrder);
+
+                Console.WriteLine(productManager.AddProduct(newOrder).Status);
+
+            } while (!productManager.AddProduct(newOrder).Success);
+
+            productManager.AssignProductValues(newOrder);
             
             Console.WriteLine("Enter Order Area: ");
             newOrder.Area = decimal.Parse(Console.ReadLine());
-
             
             OrderCostCalculation.CalculateMaterialCost(newOrder);
             OrderCostCalculation.CalculateLaborCost(newOrder);
             OrderCostCalculation.CalculateTaxCost(newOrder);
             OrderCostCalculation.CalculateOrderTotal(newOrder);
 
-            DisplayOrdersWorkflow displayOrdersWorkflow = new DisplayOrdersWorkflow();
+            var displayOrdersWorkflow = new DisplayOrdersWorkflow();
 
             displayOrdersWorkflow.PrintOrder(newOrder);
 
@@ -82,12 +76,11 @@ namespace FlooringProgram.UI
             var answer = Console.ReadLine();
             if (answer == "Y")
             {
-                OrderSaveToFile orderSaveToFile = new OrderSaveToFile();
-                orderSaveToFile.Execute(newOrder);
+                orderManager.AddOrder(newOrder);
             }
-                
 
 
+            
 
             Console.ReadLine();
         }

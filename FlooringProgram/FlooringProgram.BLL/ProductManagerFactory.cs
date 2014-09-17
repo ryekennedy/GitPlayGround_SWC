@@ -8,16 +8,17 @@ using FlooringProgram.Data.TestMode;
 
 namespace FlooringProgram.BLL
 {
-    public class OrderManagerFactory
+    public class ProductManagerFactory
     {
-        public static OrderManager CreateInstance()
+        public static ProductManager CreateInstance()
         {
             // test or production mode?  Check app.config
 
             // if test
-            return new OrderManager(new MockOrderRepository());
+            return new ProductManager(new MockProductRepository());
             // if production
-            //return new OrderManager(new OrderRepository());  // Dependency Injection
+            //return new ProductManager(new ProductRepository());  // Dependency Injection
+
         }
     }
 }

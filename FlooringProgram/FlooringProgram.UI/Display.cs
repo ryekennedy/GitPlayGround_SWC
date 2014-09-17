@@ -46,7 +46,7 @@ namespace FlooringProgram.UI
                         editOrderWorkflow.Execute();
                         break;
                     case "4":
-                        removeOrderWorkflow.Execute();
+                        //removeOrderWorkflow.Execute();
                         break;
                 }
 

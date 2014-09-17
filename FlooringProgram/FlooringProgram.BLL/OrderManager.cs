@@ -7,7 +7,7 @@ using FlooringProgram.Models;
 
 namespace FlooringProgram.BLL
 {
-    public class OrderManager
+     public class OrderManager
     {
         private IOrderRepository _orderRepository;
         //private ITaxRepository _taxRepository;
@@ -23,13 +23,13 @@ namespace FlooringProgram.BLL
             return _orderRepository.LoadAll(date);
         }
 
-        public void Add(Order order)
+        public void AddOrder(Order order)
         {
             // check if the tax rate is good
             // check if the product is good
             // do the calculations
 
-            _orderRepository.Add(order);
+            _orderRepository.AddOrderToRepository(order);
         }
 
 

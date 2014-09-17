@@ -9,6 +9,8 @@ namespace FlooringProgram.Models
     public interface ITaxRepository
     {
         List<StateTax> LoadAll();
+        StateTax GetByState(string abbreviation);
+        bool IsAllowableState(string abbreviation);
         
     }
 }

@@ -38,6 +38,17 @@ namespace FlooringProgram.Data
             return stateInfo;
         }
 
-       
+
+
+
+        public StateTax GetByState(string abbreviation)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsAllowableState(string abbreviation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

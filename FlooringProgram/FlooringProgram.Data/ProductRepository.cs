@@ -9,12 +9,12 @@ using FlooringProgram.Models;
 namespace FlooringProgram.Data
 {
    
-       public class ProductRepository
+       public class ProductRepository : IProductRepository
     {
         private const string FileName = "ProductList.txt";
         private const string HeaderRow = "ProductType, CostPerSquareFoot, LaborCostPerSquareFoot";
 
-        static public List<Product> LoadAll()
+         public List<Product> LoadAll()
         {
             var ProductList = File.ReadAllLines(FileName);
             var productInfo = new List<Product>();
@@ -37,6 +37,22 @@ namespace FlooringProgram.Data
             }
 
             return productInfo;
+        }
+
+        
+        public Product GetByProduct(string productType)
+        {
+            //foreach (var product in _productRepository.LoadAll().Where(p => p.productType == newOrder.Product.ProductType))
+            //{
+            //    newOrder.Product.CostPersquareFoot = product.CostPersquareFoot;
+            //    newOrder.Product.LaborCostPerSquareFoot = product.LaborCostPerSquareFoot;
+            //}
+            throw new NotImplementedException();
+        }
+
+        public bool IsAllowableProduct(string productType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

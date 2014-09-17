@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlooringProgram.Data;
+using FlooringProgram.Data.TestMode;
 
 namespace FlooringProgram.BLL
 {
@@ -12,7 +13,7 @@ namespace FlooringProgram.BLL
         public static TaxManager CreateInstance()
         {
             
-            return new TaxManager(new StateTaxRepository());  // Dependency Injection
+            return new TaxManager(new MockStateTaxRepository());  // Dependency Injection
         }
     }
 }

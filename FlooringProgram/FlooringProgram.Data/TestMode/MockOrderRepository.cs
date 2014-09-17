@@ -17,7 +17,7 @@ namespace FlooringProgram.Data.TestMode
             };
         }
 
-        public void Add(Order order)
+        public void AddOrderToRepository(Order order)
         {
             return;
         }

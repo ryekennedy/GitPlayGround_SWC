@@ -52,9 +52,10 @@ namespace FlooringProgram.Data
 
         }
 
-        public void Add(Order order)
+        public void AddOrderToRepository(Order order)
         {
-            throw new NotImplementedException();
+            var saveOrder = new OrderSaveToFile();
+            saveOrder.Execute(order);
         }
     }
 }
